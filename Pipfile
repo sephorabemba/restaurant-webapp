@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
+djangorestframework-xml = "*"
+django-debug-toolbar = "*"
+djoser = "*"
+mysqlclient = "2.2.2"
+
 
 [dev-packages]
 
