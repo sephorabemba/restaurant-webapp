@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -23,7 +24,26 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     
+class MenuItemView(ListCreateAPIView):
+    """
+    Methods: GET, POST
+    Type: Collection
+    """
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
+    permission_classes = [IsAuthenticated]
 
+class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
+    """
+    Methods: GET, PUT, PATCH, DELETE
+    Type: Single model instance
+    """
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
+    permission_classes = [IsAuthenticated]
+    
+    
+    
 class BookingApiView(APIView):
     def get(self, request):
         items = Booking.objects.all()
