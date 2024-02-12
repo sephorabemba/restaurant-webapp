@@ -9,7 +9,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Markazi Text', serif;
-    letter-spacing: 2px;;
+    letter-spacing: 2px;
 }
 
 h1 {
@@ -21,7 +21,7 @@ h1 {
 h2 {
     font-size: 2.5rem;
     color: #333333;
-    margin:1rem 0;
+    margin:1rem auto;
 }
 
 p, ul{
