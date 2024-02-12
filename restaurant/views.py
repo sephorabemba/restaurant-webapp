@@ -19,6 +19,9 @@ def say_hello(request):
 def index(request):
     return render(request, "index.html" , {})
 
+def about(request):
+    return render(request, 'about.html')
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
