@@ -19,13 +19,13 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from restaurant import views
-
+import djoser
 
 
 router = DefaultRouter()
 router.register("reservations", views.BookingViewSet, basename="reservations")
 router.register("book-a-table", views.BookingViewSet, basename="book-a-table")
-#router.register("users", views.UserViewSet, basename="users")
+#router.register("users", djoser.UserViewSet, basename="djoser-users")
 
 app_name = "restaurant"
 
@@ -36,8 +36,9 @@ urlpatterns = [
     path("", views.index, name="home"),
     path("about/", views.about, name="about"),
     # authentication and registration
+    path("api/register/", views.RegisterUser.as_view(), name="register" ),
     path("auth/api-token-auth", obtain_auth_token),
-    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls"), name="djoser-auth"),
     path("auth/", include("djoser.urls.authtoken")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     #path("api/", include("restaurant.urls")),

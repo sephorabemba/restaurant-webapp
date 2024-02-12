@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
@@ -10,6 +10,11 @@ from rest_framework.permissions import IsAuthenticated
 
 from restaurant.models import Booking, Menu
 from restaurant.serializers import BookingSerializer, MenuSerializer, UserSerializer
+import djoser
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+template_register = "register.html"
 
 # Create your views here.
 
@@ -20,12 +25,48 @@ def index(request):
     return render(request, "index.html" , {})
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, "about.html")
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+#def login(request):
+#    print("Show html login")
+#    return render(request,"login_logout.html", {} )
+
+class RegisterUser(APIView):
+    def get(self, request):
+        # Pass an instance of the serializer to the template context
+        serializer = UserSerializer()
+        return render(request, template_register, {'serializer': serializer, "request": request})
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            # Success message to be displayed on the HTML template
+            success_message = f"User {serializer.data['username']} successfully created!"
+            # Pass the success message to the template context
+            return render(request, template_register, {'serializer': serializer, 'success_message': success_message})
+        # If the serializer is not valid, pass it to the template context with errors
+        return render(request, template_register, {'serializer': serializer})
+
+#class UserViewSet(viewsets.ModelViewSet):
+#    queryset = User.objects.all()
+#    serializer_class = UserSerializer
+#permission_classes = [IsAuthenticated]
+
+
+#class UserViewSet(djoser.UserViewSet):
+#    queryset = User.objects.all()
+#    serializer_class = UserSerializer
+#permission_classes = [IsAuthenticated]
+    
+    
+# Login user
+
+
+
+# Logout user
+
+ 
     
 class MenuItemView(ListCreateAPIView):
     """
@@ -51,8 +92,8 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated]
-    
-    
+
+
 # ----------------------
     
 class BookingApiView(APIView):
