@@ -19,7 +19,6 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from littlelemon import settings
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken.views import obtain_auth_token
 from restaurant import views
 
 router = DefaultRouter()
@@ -39,7 +38,6 @@ urlpatterns = [
     path("register/", views.RegisterUser.as_view(), name="register" ),
     path("login/", views.LoginViewHTML.as_view(), name="login-view" ),
     path('logout/', auth_views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout-view'),
-    path("auth/api-token-auth", obtain_auth_token),
     path("auth/", include("djoser.urls"), name="djoser-auth"),
     path("auth/", include("djoser.urls.authtoken")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
