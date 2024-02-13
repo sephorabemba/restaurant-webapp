@@ -23,8 +23,11 @@ from restaurant import views
 
 router = DefaultRouter()
 router.register("api/booking", views.BookingViewSetAPI, basename="reservations-api")
-router.register("restaurant/reservations", views.ReservationsViewSetHTML, basename="reservations")
-router.register("restaurant/booking", views.BookingViewSetHTML, basename="booking")
+#router.register("restaurant/reservations", views.ReservationsViewSetHTML, basename="reservations")
+#router.register("restaurant/booking", views.BookingViewSetHTML, basename="booking")
+router.register("restaurant/reservations", views.BookingViewSetAPI, basename="reservations")
+router.register("restaurant/booking", views.BookingViewSetAPI, basename="booking")
+
 
 app_name = "restaurant"
 
