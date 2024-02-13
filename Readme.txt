@@ -14,7 +14,7 @@ API paths to test
 ** [BROWSER ONLY] Equivalents via Static HTML content **
 - /register => Create a user (register)
 - /login => Login
-- restaurant/menu/items/ => Add a menu item / See all menu items
+- /restaurant/menu/items/ => Add a menu item / See all menu items
 - /restaurant/menu/items/<int:pk> => See a single item
 - /restaurant/booking/ => Book a table / See all reservations: 
 - /restaurant/reservations/ => See all reservations
