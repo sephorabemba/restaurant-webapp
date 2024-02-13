@@ -153,3 +153,6 @@ REST_FRAMEWORK = {
 DJOSER = {
     "USER_ID_FIELD": "username",
 }
+
+LOGIN_REDIRECT_URL = "/api/login"
+LOGOUT_REDIRECT_URL = "/"

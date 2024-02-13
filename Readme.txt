@@ -2,11 +2,13 @@ API paths to test
 
 
 ** Via the LittleLemon Static HTML content **
-- Create a user: http://127.0.0.1:8000/api/register/
-- Get a token from username and password
+- Create a user (register): /api/register/
+- Login (get a token from username and password): /api/login
 
-** Via the Browsable API/Insomnia**
-- Create a user / see all users: http://127.0.0.1:8000/auth/users/
+** Via the Insomnia/POSTMAN **
+- Create a user (register) / see users: /auth/users/
+- Login (get a token from username and password): /auth/token/login
+- Logout: /auth/token/logout
 
 
 Bookings:

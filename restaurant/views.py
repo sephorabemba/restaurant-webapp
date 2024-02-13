@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -11,10 +11,14 @@ from rest_framework.permissions import IsAuthenticated
 from restaurant.models import Booking, Menu
 from restaurant.serializers import BookingSerializer, MenuSerializer, UserSerializer
 import djoser
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+
+from django.contrib.auth.views import LoginView
 from django.contrib import messages
 
 template_register = "register.html"
+template_login= "login.html"
 
 # Create your views here.
 
@@ -26,10 +30,6 @@ def index(request):
 
 def about(request):
     return render(request, "about.html")
-
-#def login(request):
-#    print("Show html login")
-#    return render(request,"login_logout.html", {} )
 
 class RegisterUser(APIView):
     def get(self, request):
@@ -46,7 +46,16 @@ class RegisterUser(APIView):
             # Pass the success message to the template context
             return render(request, template_register, {'serializer': serializer, 'success_message': success_message})
         # If the serializer is not valid, pass it to the template context with errors
+        messages.error(request, "Information invalid. Try again.")
         return render(request, template_register, {'serializer': serializer})
+
+class LoginView(LoginView):
+    template_name = 'login.html'
+    
+    def form_invalid(self, form):
+        # Add a message to the request object
+        messages.error(self.request, "Invalid username or password. Please try again.")
+        return super().form_invalid(form)
 
 #class UserViewSet(viewsets.ModelViewSet):
 #    queryset = User.objects.all()

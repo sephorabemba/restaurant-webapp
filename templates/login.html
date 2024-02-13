@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+{% if request.user.is_authenticated %}
+    <p>Welcome back {{ request.user.username }}! You're successfully logged in.</p>
+    <p>Fill the form to login to another account.</p>
+    <p>Or log out.</p>
+    <form method="post" action="{% url 'logout-view' %}">
+        {% csrf_token %}
+        <button type="submit" class="cta">Log out</button>
+    </form>
+{% else %}
+    <p>Already registered? Fill the form to login to your existing account.</p>
+    <p>Don't have an account? <a href="{%url 'register' %}">Register here.</a></p>
+{% endif%}
+
+
+<form method="post" action="{% url 'login-view' %}">
+    {% csrf_token %}
+
+    {% if messages %}
+    <article id="messages" style="background-color:rgb(206, 110, 110);">
+        <ul >
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+    {% endif %}
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br>
+
+    <button type="submit" class="cta">Log in</button>
+</form>
+
+{% endblock %}

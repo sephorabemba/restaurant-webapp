@@ -3,8 +3,13 @@
 
 {% block content %}
 <section style="text-align:center;background-color: beige;">
-        <h2>Welcome To LittleLemon Restaurant!<br>Register/Login to browse the website.</h2>
-      
+        {% if request.user.is_authenticated %}
+            <h2>Welcome back {{ request.user.username }}! You're successfully logged in.</h2>
+        {% else %}
+            <h2>Welcome to LittleLemon Restaurant!<br>Log in to browse the website.</h2>
+        {% endif %}
+
+        
 </section>
 <section>
     <article id="hero">

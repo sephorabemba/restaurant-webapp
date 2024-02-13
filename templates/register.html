@@ -2,15 +2,22 @@
 {% load static %}
 {% block content %}
 
-<p>New here? Fill the form to register as a new user.</p>
+<p>Fill the form to register a new user.</p>
 <form method="post" action="{% url 'register' %}">
     {% csrf_token %}
     {% if request.method == "POST" and not serializer.is_valid %}
-        <p>Could not create the user. Please fix the below errors and re-submit:</p>
-        <p>{{serializer.errors}}</p>
+        <article id="messages" style="background-color:rgb(206, 110, 110);">
+            <p>Could not create the user. Please fix the below errors and re-submit:</p>
+                {% for key, value in serializer.errors.items %}
+                <p>{{key}}: {% for error in value %} {{error.title}} {% endfor %}</p>
+                {% endfor %}
+        </article>
     {% endif%}
     {% if request.method == "POST" and serializer.is_valid %}
         <p>{{success_message}}</p>
+        {% if not request.user.is_authenticated %}
+            <p>Now make sure to log in here: <a href="{% url 'login-view'%}">Log In</a></p>
+        {% endif %}
     {% endif%}
     <label for="username">Username:</label>
     <input type="text" id="username" name="username"><br>
