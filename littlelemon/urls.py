@@ -24,8 +24,9 @@ from restaurant import views
 import djoser
 
 router = DefaultRouter()
-router.register("reservations", views.BookingViewSet, basename="reservations")
-router.register("book-a-table", views.BookingViewSet, basename="book-a-table")
+router.register("api/booking", views.BookingViewSetAPI, basename="reservations-api")
+router.register("restaurant/reservations", views.ReservationsViewSetHTML, basename="reservations")
+router.register("restaurant/booking", views.BookingViewSetHTML, basename="booking")
 #router.register("users", djoser.UserViewSet, basename="djoser-users")
 
 app_name = "restaurant"
@@ -47,5 +48,5 @@ urlpatterns = [
     # menu
     path("", include("restaurant.urls"), name="menu"),
     # booking
-    path("api/booking/", include((router.urls, "restaurant"), namespace="restaurant")),
+    path("", include((router.urls, "restaurant"), namespace="restaurant")),
 ]

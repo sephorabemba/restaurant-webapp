@@ -9,7 +9,10 @@
     <div class="row">
       <!--Begin col-->
       <div class="column">
-        <pre id="bookings">
+        <pre id="bookings-area">
+          {% for booking in bookings%}
+            <article>{{booking.name}}<br>Number of guests: {{booking.no_of_guests}}<br>Date: {{booking.booking_date}}</article>
+          {% endfor %}
 
           
         </pre>
@@ -36,16 +39,4 @@
   </article>
 </section>
 
-<!-- Add your code inside the script tags below  -->
-<script>
-  const bookingsData = JSON.parse('{{ bookings|safe }}');
-  console.log(bookingsData);
-  const pretty_json = JSON.stringify(bookingsData, null, 2);
-  console.log(pretty_json);
-  // update the bookings accordingly
-  document.getElementById("bookings").innerHTML = pretty_json
-
-
-</script>
 {% endblock %}
-

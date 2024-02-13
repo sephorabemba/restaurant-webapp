@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
-from restaurant.forms import MenuForm
+from restaurant.forms import MenuForm, BookingForm
 from restaurant.models import Booking, Menu
 from restaurant.serializers import BookingSerializer, MenuSerializer, UserSerializer
 import djoser
@@ -20,6 +21,8 @@ from django.contrib import messages
 template_register = "register.html"
 template_login= "login.html"
 template_menu_items= "menu.html"
+template_reservations= "bookings.html"
+template_booking= "book.html"
 
 # Create your views here.
 
@@ -167,12 +170,69 @@ class SingleMenuItemViewHTML(RetrieveUpdateAPIView, DestroyAPIView):
         return render(request, 'menu_item.html', context)
     
 
-class BookingViewSet(viewsets.ModelViewSet):
+class BookingViewSetAPI(viewsets.ModelViewSet):
     """
     """
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated]
+
+class BookingViewSetHTML(LoginRequiredMixin, viewsets.ModelViewSet):
+    """
+    """
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        print("In Booking list HTML")
+        # Render the HTML template for browser requests
+        context = {
+            "form": BookingForm(),
+            "items": self.get_queryset(),
+        }
+        return render(request, template_booking, context)
+
+    def create(self, request, *args, **kwargs):
+        print("In Booking create HTML")
+        serializer = BookingSerializer(data=request.data, context={"request": request})
+        print("In Booking create HTML - Initialized SERIALIZER")
+        if serializer.is_valid():
+            serializer.save()
+            # Pass the success message to the template context
+            context = {
+                "form": BookingForm(data=request.data),
+                "items": self.get_queryset(),
+                "success": True,
+                "serializer": serializer,
+            }
+            return render(request, template_booking, context)
+        # If the serializer is not valid, pass it to the template context with errors
+        
+        print("In Booking create HTML - DATA IS NOT VALID")
+        context = {
+            "form": BookingForm(data=request.data),
+            "items": self.get_queryset(),
+            "success": False,
+            "serializer": serializer,
+        }
+        return render(request, template_booking, context)  
+
+class ReservationsViewSetHTML(LoginRequiredMixin, viewsets.ModelViewSet):
+    """
+    """
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        print("In Booking list HTML")
+        # Render the HTML template for browser requests
+        context = {
+            "bookings": self.get_queryset(),
+        }
+        return render(request, template_reservations, context)
+    
 
 
 # ----------------------
