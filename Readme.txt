@@ -11,7 +11,7 @@ API paths to test
 
 ====
 ** [BROWSER ONLY] Shows Static HTML content **
-- / => Home page
-- /about => About page
-- /register => Create a user (register)
-- /login => Login
+- / => Home page in HTML
+- /about => About page in HTML
+- /register => Create a user (register) via HTML form
+- /login => Login via HTML form
