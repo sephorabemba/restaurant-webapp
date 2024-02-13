@@ -21,13 +21,11 @@ from littlelemon import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from restaurant import views
-import djoser
 
 router = DefaultRouter()
 router.register("api/booking", views.BookingViewSetAPI, basename="reservations-api")
 router.register("restaurant/reservations", views.ReservationsViewSetHTML, basename="reservations")
 router.register("restaurant/booking", views.BookingViewSetHTML, basename="booking")
-#router.register("users", djoser.UserViewSet, basename="djoser-users")
 
 app_name = "restaurant"
 

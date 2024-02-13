@@ -11,10 +11,8 @@ from rest_framework.permissions import IsAuthenticated
 from restaurant.forms import MenuForm, BookingForm
 from restaurant.models import Booking, Menu
 from restaurant.serializers import BookingSerializer, MenuSerializer, UserSerializer
-import djoser
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
 
@@ -24,16 +22,15 @@ template_menu_items= "menu.html"
 template_reservations= "bookings.html"
 template_booking= "book.html"
 
-# Create your views here.
-
-def say_hello(request):
-    return HttpResponse("Hello!")
+# ------------- PRESENTATION -------------
 
 def index(request):
     return render(request, "index.html" , {})
 
 def about(request):
     return render(request, "about.html")
+
+# ------------- REGISTRATION AND AUTHENTICATION -------------
 
 class RegisterUser(APIView):
     def get(self, request):
@@ -60,26 +57,6 @@ class LoginViewHTML(LoginView):
         # Add a message to the request object
         messages.error(self.request, "Invalid username or password. Please try again.")
         return super().form_invalid(form)
-
-#class UserViewSet(viewsets.ModelViewSet):
-#    queryset = User.objects.all()
-#    serializer_class = UserSerializer
-#permission_classes = [IsAuthenticated]
-
-
-#class UserViewSet(djoser.UserViewSet):
-#    queryset = User.objects.all()
-#    serializer_class = UserSerializer
-#permission_classes = [IsAuthenticated]
-    
-    
-# Login user
-
-
-
-# Logout user
-
- 
     
 class MenuItemViewAPI(ListCreateAPIView):
     """
@@ -135,6 +112,8 @@ class MenuItemViewHTML(ListCreateAPIView):
         }
         return render(request, template_menu_items, context)  
 
+# ------------- MENU -------------
+
 class SingleMenuItemViewAPI(RetrieveUpdateAPIView, DestroyAPIView):
     """
     Methods: GET, PUT, PATCH, DELETE
@@ -168,17 +147,18 @@ class SingleMenuItemViewHTML(RetrieveUpdateAPIView, DestroyAPIView):
             "menu_item": menu_item,
         }
         return render(request, 'menu_item.html', context)
-    
+
+# ------------- BOOKING -------------
 
 class BookingViewSetAPI(viewsets.ModelViewSet):
-    """
+    """Book a table and see all bookings.
     """
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated]
 
 class BookingViewSetHTML(LoginRequiredMixin, viewsets.ModelViewSet):
-    """
+    """Book a table and see all bookings. HTML rendered.
     """
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
@@ -232,36 +212,3 @@ class ReservationsViewSetHTML(LoginRequiredMixin, viewsets.ModelViewSet):
             "bookings": self.get_queryset(),
         }
         return render(request, template_reservations, context)
-    
-
-
-# ----------------------
-    
-class BookingApiView(APIView):   
-    def get(self, request):
-        items = Booking.objects.all()
-        serializer = BookingSerializer(items, many=True) #do not use data= for GET! You would need to check is_valid() first
-        return Response(serializer.data)
-    
-    def post(self, request):
-        serializer = BookingSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save() # save serialier validated data to the db
-            return Response(data={"status": "success", "message": "Booking successfully created.", "data": serializer.data}, status= status.HTTP_201_CREATED )
-        else:
-            return Response(data={"status": "error", "message": "Can't validate data.", "error": serializer.errors  }, status=status.HTTP_400_BAD_REQUEST)
-
-
-class MenuApiView(APIView):
-    def get(self, request):
-        items = Menu.objects.all()
-        serializer = MenuSerializer(items, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = MenuSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "message": "Menu item successfully created.", "data": serializer.data}, status= status.HTTP_201_CREATED )
-        else:
-            return Response({"status": "error",  "message": "Can't validate data.",  "error": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)

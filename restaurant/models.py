@@ -31,8 +31,7 @@ class Menu(models.Model):
             MinValueValidator(0, "Inventory can't be negative"),
             MaxValueValidator(99999, "Inventory can't exceed 99 999.")
         ]
-        
-        )
+    )
     
     def __str__(self):
         return f"{self.title} : {str(self.price)}"

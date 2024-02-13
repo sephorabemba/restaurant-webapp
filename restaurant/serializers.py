@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from restaurant.models import Menu, Booking
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password  # Import the make_password function
+from django.contrib.auth.hashers import make_password
 
 
 class UserSerializer(serializers.ModelSerializer):

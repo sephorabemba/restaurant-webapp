@@ -1,20 +1,20 @@
 API paths to test
 
+** [INSOMNIA] API endpoints TO TEST WITH INSOMNIA **
+- /auth/users/ => Create a user (register) / See all users
+- /auth/api-token-auth => Login
+- /auth/token/login => Login
+- /auth/token/logout => Logout
+- /api/menu/items/ => Add a menu item / See all menu items
+- /api/menu/items/<int:pk> => See a single item / Modify a single item
+- /api/booking/ => Book a table / See all reservations
 
-** Via the LittleLemon Static HTML content **
-- Create a user (register): /register
-- Login: /login
-- Logout (POST): /logout
-- See all menu items: restaurant/menu/items/
-- See a single item: /restaurant/menu/items/<int:pk>
-- Book a table / See all reservations: /restaurant/booking/
-- See all reservations: /restaurant/reservations/
 
-** API endpoints Via the Insomnia REST Client **
-- Create a user (register) / see users: /auth/users/
-- Obtain authentication token: auth/api-token-auth
-- Login: /auth/token/login
-- Logout: /auth/token/logout
-- See all menu items: /api/menu/items/
-- See a single item: /api/menu/items/<int:pk>
-- Book a table / See all reservations: /api/booking
+====
+** [BROWSER ONLY] Equivalents via Static HTML content **
+- /register => Create a user (register)
+- /login => Login
+- restaurant/menu/items/ => Add a menu item / See all menu items
+- /restaurant/menu/items/<int:pk> => See a single item
+- /restaurant/booking/ => Book a table / See all reservations: 
+- /restaurant/reservations/ => See all reservations

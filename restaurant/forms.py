@@ -1,6 +1,6 @@
 from django import forms
 from restaurant.models import Menu, Booking
-from django.forms.widgets import DateInput, DateTimeInput
+from django.forms.widgets import DateInput
 
 class MenuForm(forms.ModelForm):
     class Meta:
