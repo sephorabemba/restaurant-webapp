@@ -10,6 +10,7 @@ API paths to test
 - Create a user (register) / see users: /auth/users/
 - Login (get a token from username and password): /auth/token/login
 - Logout: /auth/token/logout
+- Obtain authentication token: auth/api-token-auth
 
 
 Bookings:
