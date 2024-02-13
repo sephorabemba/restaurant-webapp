@@ -6,22 +6,33 @@
       <h1>Menu item</h1>
       <span>
          <a href="{% url 'home' %}">Home</a> /
-         <a href="{% url 'menu' %}">Menu</a>/
-         {{menu_item.name}}
+         <a href="{% url 'menu-items' %}">Menu</a>/
+         {{menu_item.title}}
       </span>
       <!--Begin row-->
       <div class="row">
          <!--Begin col-->
          <div class="column">
+            {% if messages %}
+            <article id="messages" style="background-color:rgb(206, 110, 110);">
+               <ul >
+                     {% for message in messages %}
+                     <li>{{ message }}</li>
+                     {% endfor %}
+                     <li>{{ error }}</li>
+               </ul>
+            </article>
+            {% else %}
             <h2>
-                {{ menu_item.name }}
+               {{ menu_item.title }}
             </h2>
             <p>
-                {{ menu_item.menu_item_description }}
+                Price: ${{ menu_item.price }}
             </p>
             <p>
-                Price: ${{ menu_item.price }}.00
+                Inventory: {{ menu_item.inventory }}
             </p>
+            {% endif %}
          </div>
          <!--End col-->
          <!--Begin col-->

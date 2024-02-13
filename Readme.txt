@@ -2,15 +2,19 @@ API paths to test
 
 
 ** Via the LittleLemon Static HTML content **
-- Create a user (register): /api/register/
-- Login (get a token from username and password): /api/login
+- Create a user (register): /register
+- Login: /login
 - Logout (POST): /logout
+- See all menu items: restaurant/menu/items
+- See a single item: /restaurant/menu/items/<int:pk>
 
-** Via the Insomnia/POSTMAN **
+** API endpoints Via the Insomnia REST Client **
 - Create a user (register) / see users: /auth/users/
-- Login (get a token from username and password): /auth/token/login
-- Logout: /auth/token/logout
 - Obtain authentication token: auth/api-token-auth
+- Login: /auth/token/login
+- Logout: /auth/token/logout
+- See all menu items: /api/menu/items
+- See a single item: /api/menu/items/<int:pk>
 
 
 Bookings:

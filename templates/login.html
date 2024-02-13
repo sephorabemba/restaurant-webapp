@@ -12,6 +12,9 @@
         <button type="submit" class="cta">Log out</button>
     </form>
 {% else %}
+    <article id="messages" style="background-color:rgb(206, 110, 110);">
+        <p>You must log in to access the Menu and Booking features. </p>
+    </article>
     <p>Already registered? Fill the form to login to your existing account.</p>
     <p>Don't have an account? <a href="{%url 'register' %}">Register here.</a></p>
 {% endif%}

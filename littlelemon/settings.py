@@ -154,5 +154,6 @@ DJOSER = {
     "USER_ID_FIELD": "username",
 }
 
-LOGIN_REDIRECT_URL = "/api/login"
+LOGIN_REDIRECT_URL = "/login"
 LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = '/login'

@@ -37,15 +37,15 @@ urlpatterns = [
     path("", views.index, name="home"),
     path("about/", views.about, name="about"),
     # authentication and registration
-    path("api/register/", views.RegisterUser.as_view(), name="register" ),
-    path("api/login/", views.LoginView.as_view(), name="login-view" ),
+    path("register/", views.RegisterUser.as_view(), name="register" ),
+    path("login/", views.LoginViewHTML.as_view(), name="login-view" ),
     path('logout/', auth_views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout-view'),
     path("auth/api-token-auth", obtain_auth_token),
     path("auth/", include("djoser.urls"), name="djoser-auth"),
     path("auth/", include("djoser.urls.authtoken")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # menu
-    path("api/menu/", include("restaurant.urls"), name="menu"),
+    path("", include("restaurant.urls"), name="menu"),
     # booking
     path("api/booking/", include((router.urls, "restaurant"), namespace="restaurant")),
 ]
